@@ -1,16 +1,25 @@
 import pytest
 
-@pytest.yield_fixture() #for both setup and teardown
+#@pytest.yield_fixture() #for both setup and teardown
 #@pytest.fixture() for only setup
+
+@pytest.yield_fixture(scope='module') #setup and teardown class activity decorator has to be defined with scope='module'
 def setUp(): #method name need not be setup ,method name can be anything it can be anything
     #it can be any name abhi, or m2 anything
-    print("setup method")#just using yield keyword will start teardown to differentiate setup and teardown
+    print("setupclass method")#just using yield keyword will start teardown to differentiate setup and teardown
     #above yield is called setup activitiy
     yield
-    print("Teardown")
+    print("Teardownclass")
     #only teardown needed just put yield, no need of setup no setup activity required
     #pass the func name to test methods
 #test method naming convention - method name should start with test_
+
+@pytest.yield_fixture()
+
+def setuptearDown():
+    print("setup activity")
+    yield
+    print("tear down")
 def test_methodA(setUp):
     print("Demo method 1")
 #test methods have to be assigned with setupmethod - associate setup method with test method
@@ -34,3 +43,13 @@ print("test cleared")
 #decorator to be used for teardown is @pytest.yield_fixture
 
 #@pytest.yield_fixture() #both setup and teardown
+
+#how to implement setup class and teardown class in pytest
+#@pytest.yield_fixture
+#def m1():... code
+#we have to talk at module level
+#@pytest.yield_fixture(scope='module) #this is applicable at module only
+#1 setup and teardown will be executed
+
+#how to implement setup, teardown and setupclass, teardownclass
+#simultaneuosly in pytest all in shot in pytest
